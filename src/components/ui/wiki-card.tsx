@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-interface Props {
+interface WikiCardProps {
   title: string;
   author: string;
   date: string;
@@ -16,7 +16,13 @@ interface Props {
   href: string;
 }
 
-export function WikiCard({ title, author, date, summary, href }: Props) {
+export function WikiCard({
+  title,
+  author,
+  date,
+  summary,
+  href,
+}: WikiCardProps) {
   return (
     <Card>
       <CardHeader className="pb-2">

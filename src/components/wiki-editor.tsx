@@ -4,6 +4,8 @@ import MDEditor from "@uiw/react-md-editor";
 import { Upload, X } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { createArticle, updateArticle } from "@/app/actions/articles";
+import { uploadFile } from "@/app/actions/upload";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,12 +16,6 @@ interface WikiEditorProps {
   initialContent?: string;
   isEditing?: boolean;
   articleId?: string;
-}
-
-interface FormData {
-  title: string;
-  content: string;
-  files: File[];
 }
 
 interface FormErrors {
@@ -69,40 +65,47 @@ export default function WikiEditor({
     setFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Handle form submission
+  // Handle form submission using Server Actions
+  // We import server actions and call them from the client component.
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
 
-    const formData: FormData = {
-      title: title.trim(),
-      content: content.trim(),
-      files,
-    };
+    try {
+      let imageUrl: string | undefined;
 
-    // Log the form data (as requested - no actual API calls)
-    console.log("Form submitted:", {
-      action: isEditing ? "edit" : "create",
-      articleId: isEditing ? articleId : undefined,
-      data: formData,
-    });
+      // If there's at least one file, upload the first one via server action
+      if (files.length > 0) {
+        const fd = new FormData();
+        fd.append("files", files[0]);
+        // uploadFile is a server action imported below
+        const uploaded = await uploadFile(fd);
+        imageUrl = uploaded?.url;
+      }
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+      const payload = {
+        title: title.trim(),
+        content: content.trim(),
+        authorId: "user-1", // TODO: wire real user id
+        imageUrl,
+      };
 
-    setIsSubmitting(false);
-
-    // In a real app, you would navigate after successful submission
-    alert(
-      `Article ${
-        isEditing ? "updated" : "created"
-      } successfully! Check console for form data.`,
-    );
+      if (isEditing && articleId) {
+        await updateArticle(articleId, payload);
+        alert("Article updated (stub)");
+      } else {
+        await createArticle(payload);
+        alert("Article created (stub)");
+      }
+    } catch (err) {
+      console.error("Error submitting article:", err);
+      alert("Failed to submit article");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Handle cancel
@@ -166,7 +169,6 @@ export default function WikiEditor({
                 className={`border rounded-md ${
                   errors.content ? "border-destructive" : ""
                 }`}
-                data-color-mode="light"
               >
                 <MDEditor
                   value={content}
@@ -177,6 +179,11 @@ export default function WikiEditor({
                   textareaProps={{
                     placeholder: "Write your article content in Markdown...",
                     style: { fontSize: 14, lineHeight: 1.5 },
+                    // make these explicit so SSR and client output match exactly
+                    autoCapitalize: "off",
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: false,
                   }}
                 />
               </div>
