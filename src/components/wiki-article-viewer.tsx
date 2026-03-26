@@ -38,6 +38,8 @@ export default function WikiArticleViewer({
     });
   };
 
+  console.log(article.imageUrl);
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       {/* Breadcrumb Navigation */}
@@ -88,7 +90,6 @@ export default function WikiArticleViewer({
       {/* Article Content */}
       <Card>
         <CardContent className="pt-6">
-          {/* Article Image - Display if exists */}
           {article.imageUrl && (
             <div className="mb-8">
               <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden">

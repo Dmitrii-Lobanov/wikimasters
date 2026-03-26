@@ -3,7 +3,7 @@ import WikiEditor from "@/components/wiki-editor";
 import { getArticleById } from "@/lib/data/articles";
 import { stackServerApp } from "@/stack/server";
 
-interface EditArticlePageProps {
+interface Props {
   params: Promise<{
     id: string;
   }>;
@@ -11,9 +11,10 @@ interface EditArticlePageProps {
 
 export default async function EditArticlePage({
   params,
-}: EditArticlePageProps) {
+}: Props) {
+  await stackServerApp.getUser({ or: "redirect" });
+
   const { id } = await params;
-  const _user = await stackServerApp.getUser({ or: "redirect" });
 
   // we'll uncomment this later when the articles have real IDs
   // if (user.id !== id) {

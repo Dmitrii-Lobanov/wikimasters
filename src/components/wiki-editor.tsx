@@ -163,7 +163,7 @@ export default function WikiEditor({
             <CardTitle>Article Content</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
+            <div className="space-y-2" data-color-mode="light">
               <Label htmlFor="content">Content (Markdown) *</Label>
               <div
                 className={`border rounded-md ${
