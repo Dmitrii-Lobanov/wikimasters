@@ -41,3 +41,26 @@ Create a project on `Neon.com`
 
 Save DATABASE_URL to `.env` file
 
+### Database
+
+Install
+
+```
+npm i drizzle-orm @neondatabase/serverless dotenv
+npm i -D drizzle-kit drizzle-seed
+```
+
+Create `drizzle.config.ts` file
+
+Add drizzle schema to `src/db/schema.ts`
+
+Run `npm run db:generate` to generate migration files
+
+Run `npm run db:migrate` to create tables
+
+Add seed script to `src/db/seed.ts`
+
+Add drizzle scripts to `package.json`
+
+Seed the database by running `npm run db:seed`
+

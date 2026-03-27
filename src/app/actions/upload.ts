@@ -13,8 +13,10 @@ export type UploadedFile = {
 };
 
 export async function uploadFile(formData: FormData): Promise<UploadedFile> {
-  const user = stackServerApp.getUser();
-  
+  const user = await stackServerApp.getUser();
+
+  console.log("user", user?.id);
+
   if (!user) {
     throw new Error("❌ Unauthorized");
   }

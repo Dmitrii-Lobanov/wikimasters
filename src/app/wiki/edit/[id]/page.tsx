@@ -9,9 +9,7 @@ interface Props {
   }>;
 }
 
-export default async function EditArticlePage({
-  params,
-}: Props) {
+export default async function EditArticlePage({ params }: Props) {
   await stackServerApp.getUser({ or: "redirect" });
 
   const { id } = await params;
