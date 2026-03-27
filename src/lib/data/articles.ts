@@ -1,8 +1,18 @@
 import { eq } from "drizzle-orm";
 import db from "@/db/index";
 import { articles, usersSync } from "@/db/schema";
+import redis from "@/cache";
 
 export async function getArticles() {
+  const cached = await redis.get("articles:all");
+
+  if (cached) {
+    console.log("🎯 Get Articles Cache Hit!");
+    return cached;
+  }
+
+  console.log("🙅‍♂️ Get Articles Cache Miss!");
+
   const response = await db
     .select({
       title: articles.title,
@@ -13,6 +23,12 @@ export async function getArticles() {
     })
     .from(articles)
     .leftJoin(usersSync, eq(articles.authorId, usersSync.id));
+
+  // Populate the cache
+  redis.set("articles:all", response, {
+    ex: 60, // one minute
+  });
+
   return response;
 }
 
