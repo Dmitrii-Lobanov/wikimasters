@@ -2,11 +2,12 @@
 
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import redis from "@/cache";
 import db from "@/db/index";
 import { articles } from "@/db/schema";
 import { ensureUserExists } from "@/db/sync-user";
 import { stackServerApp } from "@/stack/server";
-import redis from "@/cache";
+import { authorizeUserToEditArticle } from "@/db/authz";
 
 // Server actions for articles (stubs)
 // TODO: Replace with real database operations when ready
@@ -63,9 +64,9 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
     throw new Error("❌ Unauthorized");
   }
 
-  // if (!(await authorizeUserToEditArticle(user.id, +id))) {
-  //   throw new Error("❌ Forbidden");
-  // }
+  if (!(await authorizeUserToEditArticle(user.id, +id))) {
+    throw new Error("❌ Forbidden");
+  }
 
   console.log("📝 updateArticle called:", { id, ...data });
 
@@ -78,6 +79,9 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
     })
     .where(eq(articles.id, +id));
 
+  // Invalidate cache
+  redis.del("articles:all");
+
   return { success: true, message: `Article ${id} update logged` };
 }
 
@@ -87,9 +91,9 @@ export async function deleteArticle(id: string) {
     throw new Error("❌ Unauthorized");
   }
 
-  // if (!(await authorizeUserToEditArticle(user.id, +id))) {
-  //   throw new Error("❌ Forbidden");
-  // }
+  if (!(await authorizeUserToEditArticle(user.id, +id))) {
+    throw new Error("❌ Forbidden");
+  }
 
   console.log("🗑️ deleteArticle called:", id);
 

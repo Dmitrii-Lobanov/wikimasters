@@ -3,12 +3,12 @@
 import { Calendar, ChevronRight, Edit, Eye, Home, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { incrementPageview } from "@/app/actions/pageviews";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { incrementPageview } from "@/app/actions/pageviews";
-import { useEffect, useState } from "react";
 
 interface ViewerArticle {
   title: string;
@@ -46,7 +46,7 @@ export default function WikiArticleViewer({
       setLocalPageviews(newCount ?? null);
     }
     fetchPageview();
-}, [article.id]);
+  }, [article.id]);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
