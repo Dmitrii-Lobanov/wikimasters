@@ -112,4 +112,16 @@ Install `resend` and `@react-email/render` packages
 
 Create a logic to send emails to users when their articles get a certain number of views
 
-Create an email template
+Create an email template using `react-email`
+
+### AI Integration
+
+Install `ai` package - `npm i ai`
+
+For using Anthropic models install `npm i @ai-sdk/anthropic`
+
+Add AI summary to articles
+
+Add summary field to API requests
+
+Migrate database - `npm run db:generate` and `npm run db:migrate`
