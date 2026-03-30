@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
+import redis from "@/cache";
 import db from "@/db/index";
 import { articles, usersSync } from "@/db/schema";
-import redis from "@/cache";
 
 export async function getArticles() {
   const cached = await redis.get("articles:all");

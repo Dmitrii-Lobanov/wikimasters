@@ -104,3 +104,12 @@ Add cache set/get/del logic to the application
 
 Connect `upstash` project to `vercel` project
 
+## Transactional Emails
+
+Login on `resend.com` and create an API Key
+
+Install `resend` and `@react-email/render` packages
+
+Create a logic to send emails to users when their articles get a certain number of views
+
+Create an email template
