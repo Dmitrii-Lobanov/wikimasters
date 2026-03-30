@@ -8,6 +8,7 @@ CREATE TABLE "articles" (
 	"author_id" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"summary" text,
 	CONSTRAINT "articles_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint

@@ -51,12 +51,14 @@ export default async function sendCelebrationEmail(
     from: "Wikimasters <onboarding@resend.dev>", // I believe it only lets you send from Resend if you haven't set up your domain
     to: email, // unless you set up your own domain, you can only email yourself
     subject: `✨ You article got ${pageviews} views! ✨`,
-    react: <CelebrationTemplate
-      articleTitle={title}
-      articleUrl={`${BASE_URL}/wiki/${articleId}`}
-      name={name ?? "Friend"}
-      pageviews={pageviews}
-    />,
+    react: (
+      <CelebrationTemplate
+        articleTitle={title}
+        articleUrl={`${BASE_URL}/wiki/${articleId}`}
+        name={name ?? "Friend"}
+        pageviews={pageviews}
+      />
+    ),
   });
 
   if (!emailRes.error) {

@@ -1,5 +1,5 @@
 {
-  "id": "ea1a5998-c5fb-454c-9e64-6b94a7a9173e",
+  "id": "9d3807ec-35d0-4097-8334-77e8a46d0cec",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -64,6 +64,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "summary": {
+          "name": "summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -72,8 +78,12 @@
           "name": "articles_author_id_usersSync_id_fk",
           "tableFrom": "articles",
           "tableTo": "usersSync",
-          "columnsFrom": ["author_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "author_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -83,7 +93,9 @@
         "articles_slug_unique": {
           "name": "articles_slug_unique",
           "nullsNotDistinct": false,
-          "columns": ["slug"]
+          "columns": [
+            "slug"
+          ]
         }
       },
       "policies": {},

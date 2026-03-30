@@ -15,6 +15,7 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.64",
     "@neondatabase/serverless": "^1.0.2",
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-slot": "^1.2.3",
@@ -23,12 +24,14 @@
     "@uiw/react-md-editor": "^4.0.8",
     "@upstash/redis": "^1.37.0",
     "@vercel/blob": "^2.3.1",
+    "ai": "^6.0.141",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.3.1",
     "drizzle-orm": "^0.45.1",
     "lucide-react": "^0.544.0",
     "next": "^16.0.1",
+    "ollama-ai-provider-v2": "^3.5.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-markdown": "^10.1.0",
