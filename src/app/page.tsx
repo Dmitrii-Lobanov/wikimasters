@@ -10,12 +10,12 @@ export default async function Home() {
       <main className="max-w-2xl mx-auto mt-10 flex flex-col gap-6">
         {articles?.map(({ title, id, createdAt, author, summary }) => (
           <WikiCard
-            title={title}
+            title={title ?? ""}
             author={author ? author : "Unknown"}
-            date={createdAt}
+            date={createdAt ?? ""}
             summary={summary ?? ""}
             href={`/wiki/${id}`}
-            key={id}
+            key={id ?? ""}
           />
         ))}
       </main>
