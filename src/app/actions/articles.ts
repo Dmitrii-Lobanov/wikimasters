@@ -2,13 +2,13 @@
 
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import summarizeArticle from "@/ai/summarize";
 import redis from "@/cache";
 import { authorizeUserToEditArticle } from "@/db/authz";
 import db from "@/db/index";
 import { articles } from "@/db/schema";
 import { ensureUserExists } from "@/db/sync-user";
 import { stackServerApp } from "@/stack/server";
-import summarizeArticle from "@/ai/summarize";
 
 // Server actions for articles (stubs)
 // TODO: Replace with real database operations when ready
