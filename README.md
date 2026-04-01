@@ -1,4 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wikimasters
+
+WikiMasters is a full-stack web application that functions as a lightweight wiki platform, allowing users to create, edit, and manage articles. It provides core features such as content creation, editing interfaces, and article listing, making it similar to a simplified collaborative knowledge base.
+
+The project is built using modern web technologies. On the frontend, it leverages frameworks like Next.js and React for building a dynamic user interface. On the backend, it uses server-side capabilities of Next.js along with a PostgreSQL database powered by Neon. Database interactions are handled through Drizzle ORM, enabling type-safe queries and schema management. The project is designed for deployment on platforms like Vercel.
+
+Overall, WikiMasters demonstrates a modern full-stack architecture combining serverless infrastructure, typed database access, and React-based UI to build a simple but functional wiki system.
+
+## Technologies Used
+
+- **Framework**: Next.js 16 (App Router) & React 19
+- **Database**: Neon Serverless Postgres with Drizzle ORM
+- **Authentication**: Stack Auth
+- **Caching**: Upstash Redis
+- **Storage**: Vercel Blob
+- **AI**: Vercel AI SDK & Anthropic models
+- **Emails**: Resend & React Email
+- **Styling**: Tailwind CSS v4 & Radix UI
+- **Testing**: Vitest & Playwright
+- **Linting & Formatting**: Biome
+
+---
 
 ## Getting Started
 
