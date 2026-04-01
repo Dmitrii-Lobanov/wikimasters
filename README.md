@@ -133,3 +133,9 @@ Migrate database - `npm run db:generate` and `npm run db:migrate`
 Install `@vercel/analytics` package
 
 Add `<Analytics />` component to `src/app/layout.tsx`
+
+## Speed Insights
+
+Install `@vercel/speed-insights` package
+
+Add `<SpeedInsights />` component to `src/app/layout.tsx`

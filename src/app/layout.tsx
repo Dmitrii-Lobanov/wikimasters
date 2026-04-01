@@ -1,9 +1,10 @@
 import { StackProvider, StackTheme } from "@stackframe/stack";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { stackClientApp } from "../stack/client";
 import NavBar from "@/components/nav/nav-bar";
-import { Analytics } from "@vercel/analytics/next";
+import { stackClientApp } from "../stack/client";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -36,6 +37,7 @@ export default function RootLayout({
             <NavBar />
             {children}
             <Analytics />
+            <SpeedInsights />
           </StackTheme>
         </StackProvider>
       </body>
