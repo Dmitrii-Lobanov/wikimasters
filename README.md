@@ -128,3 +128,8 @@ Migrate database - `npm run db:generate` and `npm run db:migrate`
 
 ## Deployment & CI/CD
 
+## Analytics
+
+Install `@vercel/analytics` package
+
+Add `<Analytics />` component to `src/app/layout.tsx`

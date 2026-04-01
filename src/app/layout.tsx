@@ -2,8 +2,9 @@ import { StackProvider, StackTheme } from "@stackframe/stack";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { stackClientApp } from "../stack/client";
-import "./globals.css";
 import NavBar from "@/components/nav/nav-bar";
+import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
           <StackTheme>
             <NavBar />
             {children}
+            <Analytics />
           </StackTheme>
         </StackProvider>
       </body>
