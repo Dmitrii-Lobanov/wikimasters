@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from 'sonner';
 
 interface WikiEditorProps {
   initialTitle?: string;
@@ -95,14 +96,14 @@ export default function WikiEditor({
 
       if (isEditing && articleId) {
         await updateArticle(articleId, payload);
-        alert("Article updated (stub)");
+        toast("Article updated (stub)");
       } else {
         await createArticle(payload);
-        alert("Article created (stub)");
+        toast("Article created (stub)");
       }
     } catch (err) {
       console.error("Error submitting article:", err);
-      alert("Failed to submit article");
+      toast("Failed to submit article");
     } finally {
       setIsSubmitting(false);
     }
