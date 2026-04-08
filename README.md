@@ -161,6 +161,14 @@ Install `@vercel/speed-insights` package
 
 Add `<SpeedInsights />` component to `src/app/layout.tsx`
 
+## Search
+
+Add search functionality to the application
+
+Add a `searchArticles` function that uses full-text search via `sql` from `drizzle-orm` to find articles
+
+Add a search bar to the navigation bar that uses the `searchArticles` function to find articles
+
 ## Environment Variables
 
 To run the application locally, you need to create a `.env` file in the root directory and add the following environment variables:
@@ -208,105 +216,121 @@ Here are some ideas for expanding the WikiMasters project to practice concepts y
 ### 🚀 New Features & Services
 
 #### 🔍 Search & Discovery
-- Add full-text search using Postgres or tools like Algolia/Typesense  
-- Implement tag/category system for organizing articles  
-- Create a "related articles" feature using embeddings and vector search  
+
+✅ Add full-text search using Postgres or tools like Algolia/Typesense
+- Implement tag/category system for organizing articles
+- Create a "related articles" feature using embeddings and vector search
 
 #### 🤝 Collaboration Features
-- Add comments/discussions (e.g., Commento or custom solution)  
-- Implement article revision history with diff view  
-- Add collaborative editing with presence indicators (e.g., PartyKit)  
-- Create reusable article templates  
+
+- Add comments/discussions (e.g., Commento or custom solution)
+- Implement article revision history with diff view
+- Add collaborative editing with presence indicators (e.g., PartyKit)
+- Create reusable article templates
 
 #### ✍️ Content Enhancement
-- Integrate an AI writing assistant (grammar fixes, suggestions)  
-- Auto-generate table of contents from markdown headings  
+
+- Integrate an AI writing assistant (grammar fixes, suggestions)
+- Auto-generate table of contents from markdown headings
 
 #### 🖼️ Media & Assets
-- Add drag-and-drop image uploads with multi-image support  
-- Create a media library for reuse  
-- Implement PDF export for articles  
-- Generate Open Graph images for sharing  
+
+- Add drag-and-drop image uploads with multi-image support
+- Create a media library for reuse
+- Implement PDF export for articles
+- Generate Open Graph images for sharing
 
 #### 🔔 Notifications & Communication
-- Add real-time notifications (Pusher / Socket.io)  
-- Implement @mentions to notify users  
-- Create digest emails (daily/weekly updates)  
-- Add Slack/Discord webhook integration  
-- Add SMS notifications via Twilio  
+
+- Add real-time notifications (Pusher / Socket.io)
+- Implement @mentions to notify users
+- Create digest emails (daily/weekly updates)
+- Add Slack/Discord webhook integration
+- Add SMS notifications via Twilio
 
 #### 📊 Analytics & Insights
-- Track article views and reading time  
-- Build dashboards (popular content, active users)  
-- Add activity feeds (recent edits, trends)  
-- Analyze which sections are most read  
+
+- Track article views and reading time
+- Build dashboards (popular content, active users)
+- Add activity feeds (recent edits, trends)
+- Analyze which sections are most read
 
 #### ✅ Quality & Workflow
-- Draft vs published article workflow  
-- Peer review / approval system  
-- Article templates / boilerplates  
-- Spell-check & grammar via LanguageTool API  
+
+- Draft vs published article workflow
+- Peer review / approval system
+- Article templates / boilerplates
+- Spell-check & grammar via LanguageTool API
 
 #### ⚡ Performance & Scale
-- Use Incremental Static Regeneration (ISR)  
-- Add edge caching (Cloudflare Workers)  
-- Use Neon read replicas for scaling  
-- Implement pagination / infinite scroll  
+
+- Use Incremental Static Regeneration (ISR)
+- Add edge caching (Cloudflare Workers)
+- Use Neon read replicas for scaling
+- Implement pagination / infinite scroll
 
 #### 🧑‍💻 Developer Experience
-- Add webhooks for article events  
-- Build CLI for importing markdown  
-- Export articles as markdown  
+
+- Add webhooks for article events
+- Build CLI for importing markdown
+- Export articles as markdown
 
 #### 🧪 Fun & Experimental
-- Dark mode toggle  
-- Keyboard shortcuts  
-- Voice-to-text input  
+
+- Dark mode toggle
+- Keyboard shortcuts
+- Voice-to-text input
 
 ---
 
 ### 🛠️ Refactoring & Best Practices
 
 #### 🧹 Code Quality
-- Increase test coverage (aim for 80%+)  
-- Add Storybook for components  
-- Implement error boundaries  
-- Add loading skeletons  
+
+- Increase test coverage (aim for 80%+)
+- Add Storybook for components
+- Implement error boundaries
+- Add loading skeletons
 
 #### 🏗️ Architecture
-- Introduce a design system  
-- Add structured logging (Pino / Winston)  
-- Implement feature flags  
-- Set up dev / staging / production environments  
-- Add canary and rolling deployments  
+
+- Introduce a design system
+- Add structured logging (Pino / Winston)
+- Implement feature flags
+- Set up dev / staging / production environments
+- Add canary and rolling deployments
 
 #### 🔐 Security
-- Add two-factor authentication  
-- Implement Content Security Policy (CSP)  
-- Add rate limiting  
-- Implement audit logs  
+
+- Add two-factor authentication
+- Implement Content Security Policy (CSP)
+- Add rate limiting
+- Implement audit logs
 
 ---
 
 ### 🔌 Integration Ideas
 
 #### 🌐 External Services
-- Sync markdown with GitHub  
-- Import/export from Google Drive  
-- Sync with Notion API  
-- Add SSO (Okta / Auth0)  
-- Set up dev auth with separate Neon project  
+
+- Sync markdown with GitHub
+- Import/export from Google Drive
+- Sync with Notion API
+- Add SSO (Okta / Auth0)
+- Set up dev auth with separate Neon project
 
 #### 🤖 AI / ML
-- Auto-generate summaries with GPT  
-- Implement semantic search (embeddings)  
-- Add content moderation  
-- Build recommendation system  
+
+- Auto-generate summaries with GPT
+- Implement semantic search (embeddings)
+- Add content moderation
+- Build recommendation system
 
 #### 📡 Monitoring & Ops
-- Add monitoring (Datadog / New Relic)  
-- Integrate Sentry for error tracking  
-- Set up uptime monitoring (Pingdom)  
-- Create a public status page  
+
+- Add monitoring (Datadog / New Relic)
+- Integrate Sentry for error tracking
+- Set up uptime monitoring (Pingdom)
+- Create a public status page
 
 ---

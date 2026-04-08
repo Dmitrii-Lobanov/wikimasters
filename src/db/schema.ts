@@ -1,20 +1,43 @@
-import { boolean, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import {
+  boolean,
+  index,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 // import { usersSync } from "drizzle-orm/neon"; <- this doesn't work anymore
 
-export const articles = pgTable("articles", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  slug: text("slug").notNull().unique(),
-  content: text("content").notNull(),
-  imageUrl: text("image_url"),
-  published: boolean("published").default(false).notNull(),
-  authorId: text("author_id")
-    .notNull()
-    .references(() => usersSync.id),
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
-  summary: text("summary"),
-});
+export const articles = pgTable(
+  "articles",
+  {
+    id: serial("id").primaryKey(),
+    title: text("title").notNull(),
+    slug: text("slug").notNull().unique(),
+    content: text("content").notNull(),
+    imageUrl: text("image_url"),
+    published: boolean("published").default(false).notNull(),
+    authorId: text("author_id")
+      .notNull()
+      .references(() => usersSync.id),
+    createdAt: timestamp("created_at", { mode: "string" })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { mode: "string" })
+      .defaultNow()
+      .notNull(),
+    summary: text("summary"),
+  },
+  (table) => {
+    return {
+      searchIndex: index("search_index").using(
+        "gin",
+        sql`to_tsvector('english', ${table.title} || ' ' || ${table.content})`,
+      ),
+    };
+  },
+);
 
 const schema = { articles };
 export default schema;
