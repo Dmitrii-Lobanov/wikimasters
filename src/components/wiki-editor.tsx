@@ -2,6 +2,7 @@
 
 import MDEditor from "@uiw/react-md-editor";
 import { Upload, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -35,6 +36,8 @@ export default function WikiEditor({
   const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const router = useRouter();
 
   // Validate form
   const validateForm = (): boolean => {
@@ -97,9 +100,18 @@ export default function WikiEditor({
       if (isEditing && articleId) {
         await updateArticle(articleId, payload);
         toast("Article updated (stub)");
+
+        router.back(); // Return to previous page after successful update
       } else {
-        await createArticle(payload);
+        const response = await createArticle(payload);
         toast("Article created (stub)");
+
+        // Navigate to the newly created article
+        if (response?.id) {
+          router.push(`/wiki/${response.id}`);
+        } else {
+          router.push("/");
+        }
       }
     } catch (err) {
       console.error("Error submitting article:", err);
@@ -117,7 +129,7 @@ export default function WikiEditor({
     );
     if (shouldLeave) {
       console.log("User cancelled editing");
-      // navigation logic would go here
+      router.back();
     }
   };
 

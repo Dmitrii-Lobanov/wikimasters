@@ -7,6 +7,7 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { stackServerApp } from "@/stack/server";
+import { SearchBar } from "./search-bar";
 
 export default async function NavBar() {
   const user = await stackServerApp.getUser();
@@ -21,6 +22,9 @@ export default async function NavBar() {
           >
             Wikimasters
           </Link>
+        </div>
+        <div className="flex-1 max-w-sm px-4">
+          <SearchBar />
         </div>
         <NavigationMenu>
           <NavigationMenuList className="flex items-center gap-2">

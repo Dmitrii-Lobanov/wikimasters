@@ -1,6 +1,6 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import summarizeArticle from "@/ai/summarize";
 import redis from "@/cache";
@@ -119,4 +119,23 @@ export async function deleteArticleForm(formData: FormData): Promise<void> {
   await deleteArticle(String(id));
   // After deleting, redirect the user back to the homepage.
   redirect("/");
+}
+
+export async function searchArticles(query: string) {
+  if (!query || query.trim().length === 0) return [];
+
+  const results = await db
+    .select({
+      id: articles.id,
+      title: articles.title,
+      slug: articles.slug,
+      summary: articles.summary,
+    })
+    .from(articles)
+    .where(
+      sql`to_tsvector('english', ${articles.title} || ' ' || ${articles.content}) @@ plainto_tsquery('english', ${query})`,
+    )
+    .limit(5);
+
+  return results;
 }
