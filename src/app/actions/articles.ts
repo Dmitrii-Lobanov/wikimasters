@@ -1,6 +1,6 @@
 "use server";
 
-import { eq, inArray, sql } from "drizzle-orm";
+import { eq, ilike, inArray, or, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import summarizeArticle from "@/ai/summarize";
 import redis from "@/cache";
@@ -173,15 +173,20 @@ export async function searchArticles(query: string) {
   if (!query || query.trim().length === 0) return [];
 
   const results = await db
-    .select({
+    .selectDistinct({
       id: articles.id,
       title: articles.title,
       slug: articles.slug,
       summary: articles.summary,
     })
     .from(articles)
+    .leftJoin(articleTags, eq(articles.id, articleTags.articleId))
+    .leftJoin(tags, eq(articleTags.tagId, tags.id))
     .where(
-      sql`to_tsvector('english', ${articles.title} || ' ' || ${articles.content}) @@ plainto_tsquery('english', ${query})`,
+      or(
+        sql`to_tsvector('english', ${articles.title} || ' ' || ${articles.content}) @@ plainto_tsquery('english', ${query})`,
+        ilike(tags.name, `%${query}%`),
+      ),
     )
     .limit(5);
 

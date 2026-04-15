@@ -99,7 +99,7 @@ export default function WikiEditor({
         authorId: "user-1", // TODO: wire real user id
         imageUrl,
         tags: tags
-          .split(",")
+          .split(/[\s,.]+/)
           .map((t) => t.trim())
           .filter(Boolean),
       };
@@ -309,13 +309,14 @@ export default function WikiEditor({
                 variant="outline"
                 onClick={handleCancel}
                 disabled={isSubmitting}
+                className="cursor-pointer"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="min-w-[100px]"
+                className="min-w-[100px] cursor-pointer"
               >
                 {isSubmitting ? "Saving..." : "Save Article"}
               </Button>
