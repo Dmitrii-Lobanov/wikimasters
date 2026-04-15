@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -14,6 +15,7 @@ interface WikiCardProps {
   date: string;
   summary: string;
   href: string;
+  tags?: string[];
 }
 
 export function WikiCard({
@@ -22,6 +24,7 @@ export function WikiCard({
   date,
   summary,
   href,
+  tags = [],
 }: WikiCardProps) {
   return (
     <Card>
@@ -33,8 +36,17 @@ export function WikiCard({
         </div>
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="py-0">
+      <CardContent className="py-0 space-y-3">
         <CardDescription>{summary}</CardDescription>
+        {tags && tags.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {tags.map((tag) => (
+              <Badge key={tag} variant="secondary" className="text-xs">
+                #{tag}
+              </Badge>
+            ))}
+          </div>
+        )}
       </CardContent>
       <CardFooter className="pt-2">
         <Link

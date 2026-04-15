@@ -1,12 +1,12 @@
 "use server";
 
-import { eq, sql } from "drizzle-orm";
+import { eq, inArray, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import summarizeArticle from "@/ai/summarize";
 import redis from "@/cache";
 import { authorizeUserToEditArticle } from "@/db/authz";
 import db from "@/db/index";
-import { articles } from "@/db/schema";
+import { articles, articleTags, tags } from "@/db/schema";
 import { ensureUserExists } from "@/db/sync-user";
 import { stackServerApp } from "@/stack/server";
 
@@ -18,13 +18,53 @@ export type CreateArticleInput = {
   content: string;
   authorId: string;
   imageUrl?: string;
+  tags?: string[];
 };
 
 export type UpdateArticleInput = {
   title?: string;
   content?: string;
   imageUrl?: string;
+  tags?: string[];
 };
+
+async function attachTagsToArticle(articleId: number, tagNames: string[]) {
+  if (!tagNames || tagNames.length === 0) {
+    await db.delete(articleTags).where(eq(articleTags.articleId, articleId));
+    return;
+  }
+
+  const tagSlugs = tagNames.map((name) =>
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, ""),
+  );
+
+  // Insert new tags safely
+  for (let i = 0; i < tagNames.length; i++) {
+    await db
+      .insert(tags)
+      .values({ name: tagNames[i], slug: tagSlugs[i] })
+      .onConflictDoNothing();
+  }
+
+  // Fetch IDs of these tags
+  const matchedTags = await db
+    .select()
+    .from(tags)
+    .where(inArray(tags.slug, tagSlugs));
+
+  // Clean existing article tags
+  await db.delete(articleTags).where(eq(articleTags.articleId, articleId));
+
+  // Insert new ones
+  if (matchedTags.length > 0) {
+    await db
+      .insert(articleTags)
+      .values(matchedTags.map((tag) => ({ articleId, tagId: tag.id })));
+  }
+}
 
 export async function createArticle(data: CreateArticleInput) {
   const user = await stackServerApp.getUser();
@@ -52,6 +92,10 @@ export async function createArticle(data: CreateArticleInput) {
     .returning({ id: articles.id });
 
   const articleId = response[0]?.id;
+
+  if (articleId && data.tags) {
+    await attachTagsToArticle(articleId, data.tags);
+  }
 
   // Invalidate cache
   redis.del("articles:all");
@@ -85,6 +129,10 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
       summary: summary ?? undefined,
     })
     .where(eq(articles.id, +id));
+
+  if (data.tags) {
+    await attachTagsToArticle(+id, data.tags);
+  }
 
   // Invalidate cache
   redis.del("articles:all");

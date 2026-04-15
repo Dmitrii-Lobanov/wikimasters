@@ -17,6 +17,7 @@ interface ViewerArticle {
   content: string;
   createdAt: string;
   imageUrl?: string | null;
+  tags?: { name: string; slug: string }[];
 }
 
 interface WikiArticleViewerProps {
@@ -80,7 +81,20 @@ export default function WikiArticleViewer({
               <Calendar className="h-4 w-4 mr-1" />
               <span>{formatDate(article.createdAt)}</span>
             </div>
-            <Badge variant="secondary">Article</Badge>
+
+            {article.tags && article.tags.length > 0 && (
+              <div className="flex gap-2">
+                {article.tags.map((tag) => (
+                  <Badge
+                    key={tag.slug}
+                    variant="secondary"
+                    className="hover:bg-secondary/80"
+                  >
+                    #{tag.name}
+                  </Badge>
+                ))}
+              </div>
+            )}
 
             <div className="ml-3 flex items-center text-sm text-muted-foreground">
               <Eye className="h-4 w-4 mr-1" />

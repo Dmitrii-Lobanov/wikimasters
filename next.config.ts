@@ -2,8 +2,18 @@ import { dirname } from "node:path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb",
+    },
+  },
   images: {
-    remotePatterns: [new URL(`${process.env.BLOB_BASE_URL}/**`)],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+      },
+    ],
   },
 
   turbopack: {

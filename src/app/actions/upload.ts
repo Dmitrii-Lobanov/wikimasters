@@ -48,6 +48,7 @@ export async function uploadFile(formData: FormData): Promise<UploadedFile> {
       access: "public",
       // prevent file name collisions
       addRandomSuffix: true,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
     });
 
     return {
