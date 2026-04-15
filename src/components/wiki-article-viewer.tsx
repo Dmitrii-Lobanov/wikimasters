@@ -107,7 +107,7 @@ export default function WikiArticleViewer({
         {/* Edit Button - Only shown if user has edit permissions */}
         {canEdit && (
           <Link href={`/wiki/edit/${article.id}`} className="ml-4">
-            <Button variant="outline">
+            <Button variant="outline" className="cursor-pointer">
               <Edit className="h-4 w-4 mr-2" />
               Edit Article
             </Button>
@@ -235,7 +235,7 @@ export default function WikiArticleViewer({
 
         {canEdit && (
           <Link href={`/wiki/edit/${article.id}`}>
-            <Button>
+            <Button className="cursor-pointer">
               <Edit className="h-4 w-4 mr-2" />
               Edit This Article
             </Button>

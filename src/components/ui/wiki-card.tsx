@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { timeAgo } from "@/lib/utils";
 
 interface WikiCardProps {
   title: string;
@@ -32,7 +33,7 @@ export function WikiCard({
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <span>{author}</span>
           <span>•</span>
-          <span>{date}</span>
+          <span>{timeAgo(date)}</span>
         </div>
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
