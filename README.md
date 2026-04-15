@@ -218,7 +218,7 @@ Here are some ideas for expanding the WikiMasters project to practice concepts y
 #### 🔍 Search & Discovery
 
 ✅ Add full-text search using Postgres or tools like Algolia/Typesense
-- Implement tag/category system for organizing articles
+✅ Implement tag/category system for organizing articles
 - Create a "related articles" feature using embeddings and vector search
 
 #### 🤝 Collaboration Features

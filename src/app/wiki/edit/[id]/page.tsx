@@ -33,6 +33,7 @@ export default async function EditArticlePage({ params }: Props) {
     <WikiEditor
       initialTitle={article.title}
       initialContent={article.content}
+      initialTags={article.tags?.map((t) => t.name)}
       isEditing={true}
       articleId={id}
     />

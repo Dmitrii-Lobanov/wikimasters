@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 interface WikiEditorProps {
   initialTitle?: string;
   initialContent?: string;
+  initialTags?: string[];
   isEditing?: boolean;
   articleId?: string;
 }
@@ -28,15 +29,17 @@ interface FormErrors {
 export default function WikiEditor({
   initialTitle = "",
   initialContent = "",
+  initialTags = [],
   isEditing = false,
   articleId,
 }: WikiEditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
+  const [tags, setTags] = useState(initialTags.join(", "));
   const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const router = useRouter();
 
   // Validate form
@@ -95,6 +98,10 @@ export default function WikiEditor({
         content: content.trim(),
         authorId: "user-1", // TODO: wire real user id
         imageUrl,
+        tags: tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
       };
 
       if (isEditing && articleId) {
@@ -166,6 +173,25 @@ export default function WikiEditor({
               {errors.title && (
                 <p className="text-sm text-destructive">{errors.title}</p>
               )}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tags Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Tags</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <Label htmlFor="tags">Tags (comma separated)</Label>
+              <Input
+                id="tags"
+                type="text"
+                placeholder="e.g. react, typescript, guide"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+              />
             </div>
           </CardContent>
         </Card>
