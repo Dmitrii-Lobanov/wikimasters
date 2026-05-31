@@ -12,8 +12,6 @@ export async function incrementPageview(articleId: number) {
 
   const newVal = await redis.incr(articleKey);
 
-  console.log(newVal, milestones.includes(newVal), milestones);
-
   if (milestones.includes(newVal)) {
     sendCelebrationEmail(articleId, +newVal); // don't await so we don't block on sending the email, just send it
   }

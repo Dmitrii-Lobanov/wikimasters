@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import NavBar from "@/components/nav/nav-bar";
+import { initializeMicroFrontends } from "@/microfrontends/loader";
 import { stackClientApp } from "../stack/client";
 import "./globals.css";
 
@@ -27,6 +28,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Initialize micro-frontend system
+  initializeMicroFrontends();
+
   return (
     <html lang="en">
       <body
